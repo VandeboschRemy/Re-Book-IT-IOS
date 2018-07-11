@@ -1,0 +1,6 @@
+framework module Pods_Re_Book_IT {
+  umbrella header "Pods-Re-Book IT-umbrella.h"
+
+  export *
+  module * { export * }
+}
