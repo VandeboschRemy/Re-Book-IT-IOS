@@ -10,6 +10,11 @@ import Foundation
 import SQLite
 
 struct Constants {
+    
+    // Following constants can be translated
+    static let searchChoice = ["Title", "Author", "Course", "ISBN"]
+    
+    // Do NOT translate following constants
     static let id = Expression<Int>("id")
     static let title = Expression<String>("title")
     static let subTitle = Expression<String>("subTitle")

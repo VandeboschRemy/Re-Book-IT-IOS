@@ -75,6 +75,16 @@ func saveToDB(dataFromWebsite: String){
 func getDataFromDB() -> AnySequence<Row>{
     return sortByDate()
 }
+
+func getDataFromDBBySearch(query: String, searchBy: Expression<String>) -> AnySequence<Row>{
+    var query: AnySequence<Row>? = nil
+    do{
+        query = try db?.prepare(Constants.table.filter(searchBy))
+    }
+    catch{
+        print(error)
+    }
+}
     
 func sortByDate() -> AnySequence<Row>{
     var query : AnySequence<Row>? = nil

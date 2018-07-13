@@ -15,15 +15,55 @@ class BookCell: UITableViewCell{
     @IBOutlet weak var qualityTag: UIImageView!
 }
 
-class MasterViewController: UITableViewController {
+class ExpandableView: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .green
+        translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return UIView.layoutFittingExpandedSize
+    }
+}
+
+class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPickerViewDelegate, UIPickerViewDataSource {
 
     var detailViewController: DetailViewController? = nil
     var objects = [Row]()
-
+    lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width/2, height: 20))
+    var leftConstraint: NSLayoutConstraint!
+    var query: String = String()
+    var searchBy: Expression<String>? = nil
+    @IBOutlet weak var spinner: UIPickerView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        assert(navigationController != nil)
+        
+        let expandableView = ExpandableView()
+        navigationItem.titleView = expandableView
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.delegate = self
+        expandableView.addSubview(searchBar)
+        expandableView.alpha = 0.0
+        leftConstraint = searchBar.leftAnchor.constraint(equalTo: expandableView.leftAnchor)
+        leftConstraint.isActive = false
+        searchBar.rightAnchor.constraint(equalTo: expandableView.rightAnchor).isActive = true
+        searchBar.topAnchor.constraint(equalTo: expandableView.topAnchor).isActive = true
+        searchBar.bottomAnchor.constraint(equalTo: expandableView.bottomAnchor).isActive = true
+        
+        searchBar.placeholder = "Search a book"
+        let leftNavButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(toggle))
+        self.navigationItem.leftBarButtonItem = leftNavButton
+        
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
@@ -197,6 +237,67 @@ class MasterViewController: UITableViewController {
         return -1
     }
     
+    @objc func toggle() {
+        
+        let isOpen = leftConstraint.isActive == true
+        
+        // Inactivating the left constraint closes the expandable header.
+        leftConstraint.isActive = isOpen ? false : true
+        
+        // Animate change to visible.
+        UIView.animate(withDuration: 1, animations: {
+            if (isOpen){
+                self.navigationItem.titleView?.alpha = 0
+                self.spinner.isHidden = true
+            }
+            else {
+                self.navigationItem.titleView?.alpha = 1
+                
+            }
+            
+            self.navigationItem.titleView?.layoutIfNeeded()
+        })
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        query = searchBar.text!
+        self.spinner.isHidden = false
+        self.spinner.selectRow(0, inComponent: 0, animated: false)
+        
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        print(Constants.searchChoice.count)
+        return Constants.searchChoice.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: Constants.searchChoice[row], attributes: [NSAttributedString.Key.foregroundColor:UIColor.white])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selected = Constants.searchChoice[row]
+        
+        if(selected == Constants.searchChoice[0]){
+            searchBy = Constants.title
+        }
+        else if (selected == Constants.searchChoice[1]){
+            searchBy = Constants.authors
+        }
+        else if (selected == Constants.searchChoice[2]){
+            searchBy = Constants.courses
+        }
+        else if (selected == Constants.searchChoice[3]){
+            searchBy = Constants.isbn
+        }
+        
+    }
+
 }
 
 
