@@ -54,12 +54,12 @@ func saveToDB(dataFromWebsite: String){
                                         Constants.title <- book["title"].stringValue,
                                         Constants.subTitle <- book["subtitle"].stringValue,
                                         Constants.count <- book["count"].stringValue,
-                                        Constants.authors <- book["authors"].stringValue,
-                                        Constants.courses <- book["courses"].stringValue,
-                                        Constants.coursesFullName <- book["courses_full_name"].stringValue,
+                                        Constants.authors <- "\(book["authors"].arrayValue)",
+                                        Constants.courses <- "\(book["courses"].arrayValue)",
+                                        Constants.coursesFullName <- "\(book["courses_full_name"].arrayValue)",
                                         Constants.price <- book["price"].doubleValue,
                                         Constants.createdAt <- book["created_at"].stringValue,
-                                        Constants.institutions <- book["institutions"].stringValue,
+                                        Constants.institutions <- "\(book["institutions"].arrayValue)",
                                         Constants.imageUrl <- book["image_url"].stringValue,
                                         Constants.quality <- book["quality"].stringValue,
                                         Constants.edition <- book["edition"].stringValue,
@@ -76,14 +76,15 @@ func getDataFromDB() -> AnySequence<Row>{
     return sortByDate()
 }
 
-func getDataFromDBBySearch(query: String, searchBy: Expression<String>) -> AnySequence<Row>{
+func getDataFromDBBySearch(searchQuery: String, searchBy: Expression<String>) -> AnySequence<Row>{
     var query: AnySequence<Row>? = nil
     do{
-        query = try db?.prepare(Constants.table.filter(searchBy))
+        query = try db?.prepare(Constants.table.filter(searchBy.like("%\(searchQuery)%")))
     }
     catch{
         print(error)
     }
+    return query!
 }
     
 func sortByDate() -> AnySequence<Row>{

@@ -10,16 +10,17 @@ import UIKit
 import SQLite
 
 class DetailViewController: UIViewController {
-
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
-
-
+    
+    @IBOutlet weak var mainTitle: UILabel!
+    @IBOutlet weak var subTitle: UILabel!
+    
+    var detailItem: Row?
+    
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
-            if let label = detailDescriptionLabel {
-                label.text = "change me"
-            }
+        if (detailItem != nil){
+            mainTitle.text = detailItem?[Constants.title]
+            subTitle.text = detailItem?[Constants.subTitle]
         }
     }
 
@@ -28,14 +29,6 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
     }
-
-    var detailItem: Row? {
-        didSet {
-            // Update the view.
-            configureView()
-        }
-    }
-
 
 }
 

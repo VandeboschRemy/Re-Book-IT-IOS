@@ -10,9 +10,9 @@ import UIKit
 import SQLite
 
 class BookCell: UITableViewCell{
-    @IBOutlet weak var title: UILabel!
     @IBOutlet weak var price: UILabel!
     @IBOutlet weak var qualityTag: UIImageView!
+    @IBOutlet weak var title: UILabel!
 }
 
 class ExpandableView: UIView {
@@ -42,6 +42,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     var query: String = String()
     var searchBy: Expression<String>? = nil
     @IBOutlet weak var spinner: UIPickerView!
+    var detail: Row?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,10 +65,15 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         let leftNavButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(toggle))
         self.navigationItem.leftBarButtonItem = leftNavButton
         
+        searchBy = Constants.title
+        
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 140
         
         downloader(url: "https://rebookit.be/search")
     }
@@ -83,11 +89,10 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.detailItem = objects[indexPath.row]
             }
         }
     }
@@ -107,6 +112,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
 
         let object = objects[indexPath.row]
         cell.title!.text = object[Constants.title]
+        cell.layoutIfNeeded()
+        
         cell.price!.text = "\(object[Constants.price])€"
         
         let quality = Int(object[Constants.quality])
@@ -249,10 +256,14 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
             if (isOpen){
                 self.navigationItem.titleView?.alpha = 0
                 self.spinner.isHidden = true
+                self.spinner.selectRow(0, inComponent: 0, animated: false)
+                self.searchBy = Constants.title
+                self.objects = Array(getDataFromDB())
+                self.tableView.reloadData()
             }
             else {
                 self.navigationItem.titleView?.alpha = 1
-                
+                self.searchBar.becomeFirstResponder()
             }
             
             self.navigationItem.titleView?.layoutIfNeeded()
@@ -263,8 +274,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         searchBar.endEditing(true)
         query = searchBar.text!
         self.spinner.isHidden = false
-        self.spinner.selectRow(0, inComponent: 0, animated: false)
-        
+        objects = Array(getDataFromDBBySearch(searchQuery: query, searchBy: searchBy!))
+        tableView.reloadData()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -272,7 +283,6 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        print(Constants.searchChoice.count)
         return Constants.searchChoice.count
     }
     
@@ -295,9 +305,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         else if (selected == Constants.searchChoice[3]){
             searchBy = Constants.isbn
         }
-        
+        objects = Array(getDataFromDBBySearch(searchQuery: query, searchBy: searchBy!))
+        tableView.reloadData()
     }
-
 }
 
 
