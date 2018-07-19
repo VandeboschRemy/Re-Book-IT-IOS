@@ -18,8 +18,6 @@ var db : Connection? = nil
 
 func createTable(){
     do{
-        
-        db = try Connection("\(path)/db.sqlite3")
         try db?.run(Constants.table.drop(ifExists: true))
         try db?.run(Constants.table.create() {
             t in
@@ -96,4 +94,15 @@ func sortByDate() -> AnySequence<Row>{
         print(error)
     }
     return query!
+}
+
+func tableExists() -> Bool{
+    do{
+        db = try Connection("\(path)/db.sqlite3")
+        try db?.scalar(Constants.table.exists)
+        return true
+    }
+    catch{
+        return false
+    }
 }

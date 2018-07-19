@@ -13,6 +13,7 @@ struct Constants {
     
     // Following constants can be translated
     static let searchChoice = ["Title", "Author", "Course", "ISBN"]
+    static let noSubTitle = "No subtitle found."
     
     // Do NOT translate following constants
     static let id = Expression<Int>("id")

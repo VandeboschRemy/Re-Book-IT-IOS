@@ -75,6 +75,10 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
         
+        if(tableExists()){
+            objects = Array(getDataFromDB())
+        }
+        
         downloader(url: "https://rebookit.be/search")
     }
 
