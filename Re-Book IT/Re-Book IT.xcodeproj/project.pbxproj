@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33A2FC841BC938575C84F996 /* Pods_Re_Book_IT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34467FB5BCDDA48FEA1CEFDF /* Pods_Re_Book_IT.framework */; };
+		9C2208C02121BD2B0032B69D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9C2208BF2121BD2B0032B69D /* Settings.bundle */; };
 		9C6DDDD220F65BEF000D2285 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDDD120F65BEF000D2285 /* AppDelegate.swift */; };
 		9C6DDDD420F65BEF000D2285 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDDD320F65BEF000D2285 /* MasterViewController.swift */; };
 		9C6DDDD620F65BEF000D2285 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDDD520F65BEF000D2285 /* DetailViewController.swift */; };
@@ -22,6 +23,7 @@
 		34467FB5BCDDA48FEA1CEFDF /* Pods_Re_Book_IT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Re_Book_IT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		502F2C27F7C7369A70F1FCDB /* Pods-Re-Book IT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Re-Book IT.release.xcconfig"; path = "Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT.release.xcconfig"; sourceTree = "<group>"; };
 		8CD0E09040AD430E5F4BB986 /* Pods-Re-Book IT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Re-Book IT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT.debug.xcconfig"; sourceTree = "<group>"; };
+		9C2208BF2121BD2B0032B69D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9C6DDDCE20F65BEF000D2285 /* Re-Book IT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Re-Book IT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C6DDDD120F65BEF000D2285 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C6DDDD320F65BEF000D2285 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				9C6DDDDF20F65BF3000D2285 /* Info.plist */,
 				9CFD12F320F666010018A5B3 /* Constants.swift */,
 				9CFD12F520F666080018A5B3 /* DatabaseUtils.swift */,
+				9C2208BF2121BD2B0032B69D /* Settings.bundle */,
 			);
 			path = "Re-Book IT";
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C2208C02121BD2B0032B69D /* Settings.bundle in Resources */,
 				9C6DDDDE20F65BF3000D2285 /* LaunchScreen.storyboard in Resources */,
 				9C6DDDDB20F65BF3000D2285 /* Assets.xcassets in Resources */,
 				9C6DDDD920F65BEF000D2285 /* Main.storyboard in Resources */,

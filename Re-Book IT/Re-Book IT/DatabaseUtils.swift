@@ -16,6 +16,9 @@ let path = NSSearchPathForDirectoriesInDomains(
 
 var db : Connection? = nil
 
+var sortBy: Int? = 0
+var maxPrice: Int? = 150
+
 func createTable(){
     do{
         try db?.run(Constants.table.drop(ifExists: true))
@@ -71,7 +74,30 @@ func saveToDB(dataFromWebsite: String){
 }
     
 func getDataFromDB() -> AnySequence<Row>{
-    return sortByDate()
+    sortBy = UserDefaults.standard.integer(forKey: "SORTBY_KEY")
+    maxPrice = UserDefaults.standard.integer(forKey: "MAX_PRICE_KEY")
+    
+    if(sortBy == 0){
+        return sortByDate()
+    }
+    else if(sortBy == 1){
+        return sortByPrice(order: Constants.order_asc)
+    }
+    else if(sortBy == 2){
+        return sortByPrice(order: Constants.order_desc)
+    }
+    else if(sortBy == 3){
+        return sortByTitle()
+    }
+    else if(sortBy == 4){
+        return sortByQuality(order: Constants.order_asc)
+    }
+    else if(sortBy == 5){
+        return sortByQuality(order: Constants.order_desc)
+    }
+    else{
+        return sortByDate()
+    }
 }
 
 func getDataFromDBBySearch(searchQuery: String, searchBy: Expression<String>) -> AnySequence<Row>{
@@ -89,6 +115,49 @@ func sortByDate() -> AnySequence<Row>{
     var query : AnySequence<Row>? = nil
     do{
             query = (try db?.prepare(Constants.table.order(Constants.createdAt.desc)))!
+    }
+    catch{
+        print(error)
+    }
+    return query!
+}
+
+func sortByPrice(order:String) -> AnySequence<Row>{
+    var query : AnySequence<Row>? = nil
+    do{
+        if(order == Constants.order_asc){
+            query = (try db?.prepare(Constants.table.order(Constants.price.asc)))!
+        }
+        else if(order == Constants.order_desc){
+            query = (try db?.prepare(Constants.table.order(Constants.price.desc)))!
+        }
+    }
+    catch{
+        print(error)
+    }
+    return query!
+}
+
+func sortByQuality(order:String) -> AnySequence<Row>{
+    var query: AnySequence<Row>? = nil
+    do{
+        if(order == Constants.order_asc){
+            query = (try db?.prepare(Constants.table.order(Constants.quality.asc)))!
+        }
+        else if(order == Constants.order_desc){
+            query = (try db?.prepare(Constants.table.order(Constants.quality.desc)))!
+        }
+    }
+    catch{
+        print(error)
+    }
+    return query!
+}
+
+func sortByTitle() -> AnySequence<Row>{
+    var query: AnySequence<Row>? = nil
+    do{
+        query = (try db?.prepare(Constants.table.order(Constants.title.asc)))!
     }
     catch{
         print(error)
