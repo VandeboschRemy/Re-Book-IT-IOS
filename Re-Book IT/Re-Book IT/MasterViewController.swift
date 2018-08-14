@@ -8,6 +8,7 @@
 
 import UIKit
 import SQLite
+import NavBarDropdownMenu
 
 class BookCell: UITableViewCell{
     @IBOutlet weak var price: UILabel!
@@ -43,6 +44,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     var searchBy: Expression<String>? = nil
     @IBOutlet weak var spinner: UIPickerView!
     var detail: Row?
+    @IBOutlet weak var menuView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +67,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         let leftNavButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(toggle))
         self.navigationItem.leftBarButtonItem = leftNavButton
         
+        let dropDownMenu = BTNavigationDropdownMenu(navigationController: self.navigationController, containerView: self.navigationController!.view, title: BTTitle.title(Constants.dropDownTitle), items: Constants.dropDown)
+        menuView.addSubview(dropDownMenu)
+        
         searchBy = Constants.title
         
         if let split = splitViewController {
@@ -74,6 +79,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 140
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showData), name: UserDefaults.didChangeNotification, object: nil)
         
         if(tableExists()){
             objects = Array(getDataFromDB())
@@ -164,7 +171,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
                     var text = String(data: data!, encoding: String.Encoding.utf8)
                     text = self.convertToRightFormat(text: text!)
                     saveToDB(dataFromWebsite: text!)
-                    self.objects = Array(getDataFromDB())
+                    self.showData()
                     group.leave()
                 }
                 else{
@@ -262,8 +269,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
                 self.spinner.isHidden = true
                 self.spinner.selectRow(0, inComponent: 0, animated: false)
                 self.searchBy = Constants.title
-                self.objects = Array(getDataFromDB())
-                self.tableView.reloadData()
+                self.showData()
             }
             else {
                 self.navigationItem.titleView?.alpha = 1
@@ -311,6 +317,12 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         }
         objects = Array(getDataFromDBBySearch(searchQuery: query, searchBy: searchBy!))
         tableView.reloadData()
+    }
+    
+    // update the list with the data
+    @objc func showData(){
+        self.objects = Array(getDataFromDB())
+        self.tableView.reloadData()
     }
 }
 

@@ -393,8 +393,18 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" id="Zdf-7t-Un8">
+                        <nil key="title"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="SGh-hr-NsQ">
+                            <view key="customView" contentMode="scaleToFill" id="qzY-qM-bpI" userLabel="menuView">
+                                <rect key="frame" x="331" y="6.5" width="28" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="menuView" destination="qzY-qM-bpI" id="HTJ-iC-Kmh"/>
                         <outlet property="spinner" destination="xgE-Gq-0Gk" id="GvN-ci-hUJ"/>
                     </connections>
                 </tableViewController>

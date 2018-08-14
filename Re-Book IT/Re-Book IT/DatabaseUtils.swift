@@ -17,7 +17,7 @@ let path = NSSearchPathForDirectoriesInDomains(
 var db : Connection? = nil
 
 var sortBy: Int? = 0
-var maxPrice: Int? = 150
+var maxPrice: Double? = 150.0
 
 func createTable(){
     do{
@@ -75,7 +75,7 @@ func saveToDB(dataFromWebsite: String){
     
 func getDataFromDB() -> AnySequence<Row>{
     sortBy = UserDefaults.standard.integer(forKey: "SORTBY_KEY")
-    maxPrice = UserDefaults.standard.integer(forKey: "MAX_PRICE_KEY")
+    maxPrice = UserDefaults.standard.double(forKey: "MAX_PRICE_KEY")
     
     if(sortBy == 0){
         return sortByDate()
@@ -103,7 +103,7 @@ func getDataFromDB() -> AnySequence<Row>{
 func getDataFromDBBySearch(searchQuery: String, searchBy: Expression<String>) -> AnySequence<Row>{
     var query: AnySequence<Row>? = nil
     do{
-        query = try db?.prepare(Constants.table.filter(searchBy.like("%\(searchQuery)%")))
+        query = try db?.prepare(Constants.table.filter(searchBy.like("%\(searchQuery)%")).filter(Constants.price <= Expression<Double>(value: maxPrice!)))
     }
     catch{
         print(error)
@@ -114,7 +114,7 @@ func getDataFromDBBySearch(searchQuery: String, searchBy: Expression<String>) ->
 func sortByDate() -> AnySequence<Row>{
     var query : AnySequence<Row>? = nil
     do{
-            query = (try db?.prepare(Constants.table.order(Constants.createdAt.desc)))!
+            query = (try db?.prepare(Constants.table.order(Constants.createdAt.desc).filter(Constants.price <= Expression<Double>(value: maxPrice!))))!
     }
     catch{
         print(error)
@@ -126,10 +126,10 @@ func sortByPrice(order:String) -> AnySequence<Row>{
     var query : AnySequence<Row>? = nil
     do{
         if(order == Constants.order_asc){
-            query = (try db?.prepare(Constants.table.order(Constants.price.asc)))!
+            query = (try db?.prepare(Constants.table.order(Constants.price.asc).filter(Constants.price <= Expression<Double>(value: maxPrice!))))!
         }
         else if(order == Constants.order_desc){
-            query = (try db?.prepare(Constants.table.order(Constants.price.desc)))!
+            query = (try db?.prepare(Constants.table.order(Constants.price.desc).filter(Constants.price <= Expression<Double>(value: maxPrice!))))!
         }
     }
     catch{
@@ -142,10 +142,10 @@ func sortByQuality(order:String) -> AnySequence<Row>{
     var query: AnySequence<Row>? = nil
     do{
         if(order == Constants.order_asc){
-            query = (try db?.prepare(Constants.table.order(Constants.quality.asc)))!
+            query = (try db?.prepare(Constants.table.order(Constants.quality.asc).filter(Constants.price <= Expression<Double>(value: maxPrice!))))!
         }
         else if(order == Constants.order_desc){
-            query = (try db?.prepare(Constants.table.order(Constants.quality.desc)))!
+            query = (try db?.prepare(Constants.table.order(Constants.quality.desc).filter(Constants.price <= Expression<Double>(value: maxPrice!))))!
         }
     }
     catch{
@@ -157,7 +157,7 @@ func sortByQuality(order:String) -> AnySequence<Row>{
 func sortByTitle() -> AnySequence<Row>{
     var query: AnySequence<Row>? = nil
     do{
-        query = (try db?.prepare(Constants.table.order(Constants.title.asc)))!
+        query = (try db?.prepare(Constants.table.order(Constants.title.asc).filter(Constants.price <= Expression<Double>(value: maxPrice!))))!
     }
     catch{
         print(error)

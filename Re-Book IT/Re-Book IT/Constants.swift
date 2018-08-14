@@ -20,6 +20,8 @@ struct Constants {
     static let share = "Share"
     static let shareBegin = "Just found this awesome book: "
     static let shareEnd = "Shared with the Re-Book IT app"
+    static let dropDown = ["Settings", "Contact", "Info", "Sell books"]
+    static let dropDownTitle = "Menu"
     
     // Do NOT translate following constants
     static let id = Expression<Int>("id")
