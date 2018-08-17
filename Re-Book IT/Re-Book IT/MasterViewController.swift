@@ -44,7 +44,10 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     var searchBy: Expression<String>? = nil
     @IBOutlet weak var spinner: UIPickerView!
     var detail: Row?
-    @IBOutlet weak var menuView: UIView!
+    
+    
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet var menuButtons: [UIButton] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,11 +67,11 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         searchBar.bottomAnchor.constraint(equalTo: expandableView.bottomAnchor).isActive = true
         
         searchBar.placeholder = "Search a book"
-        let leftNavButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(toggle))
-        self.navigationItem.leftBarButtonItem = leftNavButton
+        let rightNavButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(toggle))
+        self.navigationItem.rightBarButtonItem = rightNavButton
         
-        let dropDownMenu = BTNavigationDropdownMenu(navigationController: self.navigationController, containerView: self.navigationController!.view, title: BTTitle.title(Constants.dropDownTitle), items: Constants.dropDown)
-        menuView.addSubview(dropDownMenu)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: Constants.dropDownTitle, style: UIBarButtonItem.Style.plain, target: self, action: #selector(showDropdown))
+       
         
         searchBy = Constants.title
         
@@ -81,6 +84,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         tableView.estimatedRowHeight = 140
         
         NotificationCenter.default.addObserver(self, selector: #selector(showData), name: UserDefaults.didChangeNotification, object: nil)
+        
+        stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 0.0)
         
         if(tableExists()){
             objects = Array(getDataFromDB())
@@ -269,13 +274,15 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
                 self.spinner.isHidden = true
                 self.spinner.selectRow(0, inComponent: 0, animated: false)
                 self.searchBy = Constants.title
+                self.stackView.frame = CGRect(x: self.stackView.frame.origin.x, y: self.stackView.frame.origin.y, width: self.stackView.frame.width, height: 0.0)
+                self.query = ""
                 self.showData()
             }
             else {
                 self.navigationItem.titleView?.alpha = 1
                 self.searchBar.becomeFirstResponder()
+                self.stackView.frame = CGRect(x: self.stackView.frame.origin.x, y: self.stackView.frame.origin.y, width: self.stackView.frame.width, height: 147.0)
             }
-            
             self.navigationItem.titleView?.layoutIfNeeded()
         })
     }
@@ -283,6 +290,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
         query = searchBar.text!
+        if(!menuButtons[0].isHidden){
+            showDropdown()
+        }
         self.spinner.isHidden = false
         objects = Array(getDataFromDBBySearch(searchQuery: query, searchBy: searchBy!))
         tableView.reloadData()
@@ -323,6 +333,48 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     @objc func showData(){
         self.objects = Array(getDataFromDB())
         self.tableView.reloadData()
+    }
+    
+    @objc func showDropdown(){
+        self.stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 147.0)
+        var i = 0
+        if(spinner.isHidden && query != ""){
+            spinner.isHidden = false
+        }
+        else if(!spinner.isHidden){
+            spinner.isHidden = true
+        }
+        for button in menuButtons{
+            button.setTitle(Constants.dropDown[i], for: .normal)
+            button.layer.cornerRadius = 20.0
+            if(button.isHidden){
+                button.isHidden = false
+            }
+            else{
+                button.isHidden = true
+                if(query == ""){
+                    self.stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 0.0)
+                }
+            }
+            i = i + 1
+        }
+        self.view.layoutIfNeeded()
+    }
+    @IBAction func openSettings(_ sender: Any) {
+        let settingsurl = URL(string: UIApplication.openSettingsURLString)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(settingsurl!, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(settingsurl!)
+        }
+    }
+    @IBAction func openSellBooks(_ sender: Any) {
+        let url = URL(string: "https://rebookit.be/sell")
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url!)
+        }
     }
 }
 
