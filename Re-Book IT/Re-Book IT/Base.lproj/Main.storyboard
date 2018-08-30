@@ -356,7 +356,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.2211096129" green="0.2211096129" blue="0.2211096129" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <stackView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" id="2wk-kq-KY5">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="147"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="80j-i0-y0U">
@@ -382,6 +382,10 @@
                                     <state key="normal" title="Button">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
+                                    <connections>
+                                        <action selector="openContact:" destination="7bK-jq-Zjz" eventType="touchDown" id="FQi-Mm-dOM"/>
+                                        <segue destination="uoL-wG-ZYz" kind="show" id="CLx-dC-QoO"/>
+                                    </connections>
                                 </button>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGV-tH-3He">
                                     <rect key="frame" x="8" y="0.0" width="117" height="0.0"/>
@@ -401,6 +405,7 @@
                                     </connections>
                                 </button>
                             </subviews>
+                            <color key="backgroundColor" red="0.46281978629999998" green="0.46281978629999998" blue="0.46281978629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="pBo-gP-Ul9" firstAttribute="leading" secondItem="2wk-kq-KY5" secondAttribute="leading" constant="8" id="IWH-lU-6vD"/>
                                 <constraint firstAttribute="trailing" secondItem="pBo-gP-Ul9" secondAttribute="trailing" constant="250" id="KWN-kL-esN"/>
@@ -414,7 +419,7 @@
                         </stackView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="56" id="WCw-Qf-5nD" customClass="BookCell" customModule="Re_Book_IT" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="175" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="168" width="375" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
@@ -483,6 +488,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="708" y="-630.13493253373315"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jni-Wm-ZIh">
+            <objects>
+                <navigationController id="uoL-wG-ZYz" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eMT-ql-pMx">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lLj-Ji-CIj" kind="relationship" relationship="rootViewController" id="Hp7-uq-jL7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gle-Ik-ZFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1569" y="-647"/>
+        </scene>
+        <!--Contact View-->
+        <scene sceneID="C10-ic-5h2">
+            <objects>
+                <viewController id="lLj-Ji-CIj" customClass="ContactView" customModule="Re_Book_IT" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DRE-Et-Ulp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsN-BC-hAs">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8D-X4-lyf" customClass="GMSMapView">
+                                        <rect key="frame" x="44" y="138" width="240" height="290"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ZsN-BC-hAs" firstAttribute="top" secondItem="xo7-Qd-9iz" secondAttribute="top" id="K4l-kk-yL2"/>
+                            <constraint firstItem="ZsN-BC-hAs" firstAttribute="leading" secondItem="xo7-Qd-9iz" secondAttribute="leading" id="eii-zw-K2S"/>
+                            <constraint firstItem="xo7-Qd-9iz" firstAttribute="bottom" secondItem="ZsN-BC-hAs" secondAttribute="bottom" id="fSI-hS-yFE"/>
+                            <constraint firstItem="xo7-Qd-9iz" firstAttribute="trailing" secondItem="ZsN-BC-hAs" secondAttribute="trailing" id="tO4-TV-Dw9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xo7-Qd-9iz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="amy-Vh-lwb"/>
+                    <connections>
+                        <outlet property="mapView" destination="z8D-X4-lyf" id="Poj-Nh-h9y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qSl-ih-sc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2384.8000000000002" y="-649.02548725637189"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">

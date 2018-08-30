@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		33A2FC841BC938575C84F996 /* Pods_Re_Book_IT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34467FB5BCDDA48FEA1CEFDF /* Pods_Re_Book_IT.framework */; };
 		9C2208C02121BD2B0032B69D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9C2208BF2121BD2B0032B69D /* Settings.bundle */; };
+		9C385FEE21382C600073C854 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C385FED21382C600073C854 /* ContactView.swift */; };
 		9C6DDDD220F65BEF000D2285 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDDD120F65BEF000D2285 /* AppDelegate.swift */; };
 		9C6DDDD420F65BEF000D2285 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDDD320F65BEF000D2285 /* MasterViewController.swift */; };
 		9C6DDDD620F65BEF000D2285 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6DDDD520F65BEF000D2285 /* DetailViewController.swift */; };
@@ -24,6 +25,7 @@
 		502F2C27F7C7369A70F1FCDB /* Pods-Re-Book IT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Re-Book IT.release.xcconfig"; path = "Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT.release.xcconfig"; sourceTree = "<group>"; };
 		8CD0E09040AD430E5F4BB986 /* Pods-Re-Book IT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Re-Book IT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT.debug.xcconfig"; sourceTree = "<group>"; };
 		9C2208BF2121BD2B0032B69D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		9C385FED21382C600073C854 /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		9C6DDDCE20F65BEF000D2285 /* Re-Book IT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Re-Book IT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C6DDDD120F65BEF000D2285 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C6DDDD320F65BEF000D2285 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				9CFD12F320F666010018A5B3 /* Constants.swift */,
 				9CFD12F520F666080018A5B3 /* DatabaseUtils.swift */,
 				9C2208BF2121BD2B0032B69D /* Settings.bundle */,
+				9C385FED21382C600073C854 /* ContactView.swift */,
 			);
 			path = "Re-Book IT";
 			sourceTree = "<group>";
@@ -112,6 +115,7 @@
 				9C6DDDCB20F65BEF000D2285 /* Frameworks */,
 				9C6DDDCC20F65BEF000D2285 /* Resources */,
 				885314C05A96E5FA297D4EE6 /* [CP] Embed Pods Frameworks */,
+				62BEE25284A4EDE170CC4EC1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -188,6 +192,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		62BEE25284A4EDE170CC4EC1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		885314C05A96E5FA297D4EE6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,13 +217,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Re-Book IT/Pods-Re-Book IT-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/NavBarDropdownMenu/NavBarDropdownMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NavBarDropdownMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -218,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C6DDDD620F65BEF000D2285 /* DetailViewController.swift in Sources */,
+				9C385FEE21382C600073C854 /* ContactView.swift in Sources */,
 				9CFD12F620F666090018A5B3 /* DatabaseUtils.swift in Sources */,
 				9C6DDDD420F65BEF000D2285 /* MasterViewController.swift in Sources */,
 				9C6DDDD220F65BEF000D2285 /* AppDelegate.swift in Sources */,

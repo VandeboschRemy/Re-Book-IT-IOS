@@ -8,7 +8,6 @@
 
 import UIKit
 import SQLite
-import NavBarDropdownMenu
 
 class BookCell: UITableViewCell{
     @IBOutlet weak var price: UILabel!
@@ -44,6 +43,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     var searchBy: Expression<String>? = nil
     @IBOutlet weak var spinner: UIPickerView!
     var detail: Row?
+    let originalHeight: CGFloat = 140.0
     
     
     @IBOutlet weak var stackView: UIStackView!
@@ -176,7 +176,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
                     var text = String(data: data!, encoding: String.Encoding.utf8)
                     text = self.convertToRightFormat(text: text!)
                     saveToDB(dataFromWebsite: text!)
-                    self.showData()
+                    if(self.query == ""){
+                        self.showData()
+                    }
                     group.leave()
                 }
                 else{
@@ -281,7 +283,6 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
             else {
                 self.navigationItem.titleView?.alpha = 1
                 self.searchBar.becomeFirstResponder()
-                self.stackView.frame = CGRect(x: self.stackView.frame.origin.x, y: self.stackView.frame.origin.y, width: self.stackView.frame.width, height: 147.0)
             }
             self.navigationItem.titleView?.layoutIfNeeded()
         })
@@ -294,6 +295,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
             showDropdown()
         }
         self.spinner.isHidden = false
+        self.stackView.frame = CGRect(x: self.stackView.frame.origin.x, y: self.stackView.frame.origin.y, width: self.stackView.frame.width, height: originalHeight)
         objects = Array(getDataFromDBBySearch(searchQuery: query, searchBy: searchBy!))
         tableView.reloadData()
     }
@@ -336,7 +338,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     }
     
     @objc func showDropdown(){
-        self.stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 147.0)
+        self.stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: originalHeight)
         var i = 0
         if(spinner.isHidden && query != ""){
             spinner.isHidden = false
@@ -375,6 +377,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         } else {
             UIApplication.shared.openURL(url!)
         }
+    }
+    @IBAction func openContact(_ sender: Any) {
+        showDropdown()
     }
 }
 
