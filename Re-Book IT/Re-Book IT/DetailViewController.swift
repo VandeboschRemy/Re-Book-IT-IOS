@@ -31,6 +31,8 @@ class DetailViewController: UIViewController {
         if (detailItem != nil){
             image.image = UIImage(named: "default_image")
             mainTitle.text = detailItem?[Constants.title]
+            //set title of view to title of the book
+            self.navigationItem.title = detailItem?[Constants.title]
             if(detailItem?[Constants.subTitle] == ""){
                 subTitle.text = Constants.noSubTitle
             }

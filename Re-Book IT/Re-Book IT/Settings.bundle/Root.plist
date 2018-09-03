@@ -50,11 +50,21 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Max price</string>
+			<key>DefaultValue</key>
+			<string>Max price</string>
+			<key>Key</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSSliderSpecifier</string>
 			<key>Title</key>
 			<string>Max price</string>
-            <key>label</key>
-            <string>Max price</string>
+			<key>label</key>
+			<string>Max price</string>
 			<key>Key</key>
 			<string>MAX_PRICE_KEY</string>
 			<key>MinimumValue</key>

@@ -22,7 +22,9 @@ struct Constants {
     static let shareEnd = "Shared with the Re-Book IT app"
     static let dropDown = ["Settings", "Contact", "Info", "Sell books"]
     static let dropDownTitle = "Menu"
-    static let markerTitle = "Re-Book-IT"
+    static let timeTableHeader = "Opening Hours"
+    static let addressHeader = "Address"
+    static let address = "Agoralaan Gebouw D, Kantoor B111\n3590 Diepenbeek, Vlaanderen"
     
     // Do NOT translate following constants
     static let id = Expression<Int>("id")
@@ -42,4 +44,5 @@ struct Constants {
     static let table = Table("bookData")
     static let order_asc = "ASC"
     static let order_desc = "DESC"
+    static let markerTitle = "Re-Book-IT"
 }

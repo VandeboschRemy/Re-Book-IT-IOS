@@ -314,7 +314,7 @@
                         <viewLayoutGuide key="safeArea" id="VUw-jc-0yf"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
+                    <navigationItem key="navigationItem" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="author" destination="zhm-rA-28S" id="pER-EK-MM4"/>
                         <outlet property="count" destination="K4I-Ym-i0e" id="nhM-Mv-bUh"/>
@@ -511,20 +511,28 @@
                 <viewController id="lLj-Ji-CIj" customClass="ContactView" customModule="Re_Book_IT" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DRE-Et-Ulp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsN-BC-hAs">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8D-X4-lyf" customClass="GMSMapView">
-                                        <rect key="frame" x="44" y="138" width="240" height="290"/>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mOM-aR-ucZ">
+                                        <rect key="frame" x="4" y="172" width="367" height="423"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </mapView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdc-Z3-PnR">
+                                        <rect key="frame" x="8" y="8" width="359" height="156"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ZsN-BC-hAs" firstAttribute="top" secondItem="xo7-Qd-9iz" secondAttribute="top" id="K4l-kk-yL2"/>
                             <constraint firstItem="ZsN-BC-hAs" firstAttribute="leading" secondItem="xo7-Qd-9iz" secondAttribute="leading" id="eii-zw-K2S"/>
@@ -535,7 +543,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="amy-Vh-lwb"/>
                     <connections>
-                        <outlet property="mapView" destination="z8D-X4-lyf" id="Poj-Nh-h9y"/>
+                        <outlet property="mapView" destination="mOM-aR-ucZ" id="yh8-iz-6BE"/>
+                        <outlet property="timetable" destination="Gdc-Z3-PnR" id="cZn-lu-N2s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qSl-ih-sc7" userLabel="First Responder" sceneMemberID="firstResponder"/>
