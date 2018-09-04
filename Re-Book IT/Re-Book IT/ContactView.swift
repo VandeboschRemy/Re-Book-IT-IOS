@@ -14,9 +14,16 @@ class ContactView: UIViewController{
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var timetable: UILabel!
+    @IBOutlet weak var timeTableHeader: UILabel!
+    @IBOutlet weak var adressHeader: UILabel!
+    @IBOutlet weak var adress: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        timetable.text = Constants.timeTableWait
+        timeTableHeader.text = Constants.timeTableHeader
+        adressHeader.text = Constants.addressHeader
+        adress.text = Constants.address
         self.downloadOpeningHours()
         self.loadMap()
     }
@@ -43,9 +50,9 @@ class ContactView: UIViewController{
             request.httpMethod = "GET"
             
             let session = URLSession(configuration: URLSessionConfiguration.default)
-            print("download complete")
+
             let task = session.dataTask(with: request as URLRequest, completionHandler: {(data, response, error) in
-                print("got the data")
+
                 if(error == nil){
                     let hours = self.extractOpeningHours(text: String(data: data!, encoding: String.Encoding.utf8)!)
                     self.showOpening(hours: hours)
@@ -54,17 +61,18 @@ class ContactView: UIViewController{
                     print("error: \(error)")
                 }
             })
+            task.resume()
         }
     }
     
     func extractOpeningHours(text: String) -> String{
-        print("searching start")
-        let startIndex = indexOf(string: text, subString: "Openingsuren</h4>") + "Openingsuren</h4>".count
+
+        let startIndex = indexOf(string: text, subString: "Openingsuren</h4>") + "Openingsuren</h4>                                     <p>".count
         let start = text.index(text.startIndex, offsetBy: startIndex)
-        print("found start")
+
         let endIndex = lastIndexOf(string: text, subString: "Gesloten") + "Gesloten".count
         let end = text.index(text.startIndex, offsetBy: endIndex)
-        print("found end")
+
         let range = start..<end
         
         if(startIndex == -1 || endIndex == -1){
@@ -73,7 +81,10 @@ class ContactView: UIViewController{
         else{
             var output: String = ""
             for sub in text.substring(with: range).components(separatedBy: "<br>"){
-                output += sub + "\n"
+                let subTrimmed = sub.trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
+                print(sub)
+                print(subTrimmed)
+                output += subTrimmed
             }
             return output
         }
@@ -134,7 +145,7 @@ class ContactView: UIViewController{
     
     func showOpening(hours: String){
         if(hours != "nil"){
-            timetable.text = "\(Constants.timeTableHeader):\n\(hours)\n\(Constants.addressHeader):\n\(Constants.address)"
+            timetable.text = hours
         }
         else{
             print("error")

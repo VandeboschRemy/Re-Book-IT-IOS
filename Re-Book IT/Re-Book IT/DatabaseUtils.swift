@@ -76,6 +76,9 @@ func saveToDB(dataFromWebsite: String){
 func getDataFromDB() -> AnySequence<Row>{
     sortBy = UserDefaults.standard.integer(forKey: "SORTBY_KEY")
     maxPrice = UserDefaults.standard.double(forKey: "MAX_PRICE_KEY")
+    if(maxPrice == 0.0){
+        maxPrice = 150.0
+    }
     
     if(sortBy == 0){
         return sortByDate()

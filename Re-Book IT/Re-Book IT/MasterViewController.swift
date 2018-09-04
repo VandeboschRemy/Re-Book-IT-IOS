@@ -39,11 +39,12 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     var objects = [Row]()
     lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width/2, height: 20))
     var leftConstraint: NSLayoutConstraint!
-    var query: String = String()
+    var query: String = ""
     var searchBy: Expression<String>? = nil
     @IBOutlet weak var spinner: UIPickerView!
     var detail: Row?
     let originalHeight: CGFloat = 140.0
+    var infoDidAppear = false
     
     
     @IBOutlet weak var stackView: UIStackView!
@@ -87,16 +88,20 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         
         stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 0.0)
         
-        if(tableExists()){
-            objects = Array(getDataFromDB())
-        }
-        
         downloader(url: "https://rebookit.be/search")
     }
 
     override func viewWillAppear(_ animated: Bool) {
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if(!tableExists() && !infoDidAppear){
+            self.openInfo()
+            infoDidAppear = true
+        }
+        showData()
     }
 
 
@@ -333,7 +338,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     
     // update the list with the data
     @objc func showData(){
-        self.objects = Array(getDataFromDB())
+        if(tableExists()){
+            self.objects = Array(getDataFromDB())
+        }
         self.tableView.reloadData()
     }
     
@@ -380,6 +387,10 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     }
     @IBAction func openContact(_ sender: Any) {
         showDropdown()
+    }
+    
+    func openInfo(){
+        performSegue(withIdentifier: "showInformation", sender: self)
     }
 }
 

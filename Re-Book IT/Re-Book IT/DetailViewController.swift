@@ -44,12 +44,27 @@ class DetailViewController: UIViewController {
             isbn.text = "ISBN: \(detailItem?[Constants.isbn] ?? "0")"
             count.text = "count: \(detailItem?[Constants.count] ?? "0")"
             quality.text = "quality: \(detailItem?[Constants.quality] ?? "0")%"
-            author.text = "authors: \n\(detailItem?[Constants.authors] ?? Constants.noAuthor)"
-            author.text = author.text?.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-            courses.text = "courses: \n\(detailItem?[Constants.courses] ?? Constants.noCourses)"
-            courses.text = courses.text?.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-            universities.text = "universities: \n\(detailItem?[Constants.institutions] ?? Constants.noUniversities)"
-            universities.text = universities.text?.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+            if(detailItem?[Constants.authors] == "[]"){
+                author.text = Constants.noAuthor
+            }
+            else{
+                author.text = "authors: \n\(detailItem?[Constants.authors] ?? Constants.noAuthor)"
+                author.text = author.text?.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+            }
+            if(detailItem?[Constants.courses] == "[]"){
+                courses.text = Constants.noCourses
+            }
+            else{
+                courses.text = "courses: \n\(detailItem?[Constants.courses] ?? Constants.noCourses)"
+                courses.text = courses.text?.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+            }
+            if(detailItem?[Constants.institutions] == "[]"){
+                universities.text = Constants.noUniversities
+            }
+            else{
+                universities.text = "universities: \n\(detailItem?[Constants.institutions] ?? Constants.noUniversities)"
+                universities.text = universities.text?.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+            }
             let url = "https://rebookit.be/\(detailItem?[Constants.imageUrl] ?? "")"
             getImage(url: url)
         }

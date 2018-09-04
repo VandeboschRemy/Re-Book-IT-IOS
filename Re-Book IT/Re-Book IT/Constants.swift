@@ -22,9 +22,25 @@ struct Constants {
     static let shareEnd = "Shared with the Re-Book IT app"
     static let dropDown = ["Settings", "Contact", "Info", "Sell books"]
     static let dropDownTitle = "Menu"
-    static let timeTableHeader = "Opening Hours"
-    static let addressHeader = "Address"
+    static let timeTableHeader = "Opening Hours:"
+    static let addressHeader = "Address:"
     static let address = "Agoralaan Gebouw D, Kantoor B111\n3590 Diepenbeek, Vlaanderen"
+    static let timeTableWait = "Please wait while content is loading..."
+    static let priceInfoHeader = "Which price do you pay at Re-Book IT?"
+    static let priceInfo = """
+Books at Re-Book IT have a qualitylabel which also determines the price.
+    The percentage of the quality is also the price wich you pay relative the new price in the campusshop.
+    Each book gets it\'s qualitylabel after a physical inspection by our team.
+"""
+    static let greenInfo = "80% or more / unused"
+    static let redInfo = "70% / used without notes"
+    static let greyInfo = "50% / with notes"
+    static let yellowInfo = "30% / with A LOT of notes or just an old edition"
+    static let warrantyHeader = "What warranty is provided at Re-Book IT?"
+    static let warrantyInfo = """
+Every client gets one month to return a book. This is only valid if a mistake is made on the side on Re-Book IT.
+    In specific this means a wrong qualitylabel or wrong product information.\n\n
+"""
     
     // Do NOT translate following constants
     static let id = Expression<Int>("id")
