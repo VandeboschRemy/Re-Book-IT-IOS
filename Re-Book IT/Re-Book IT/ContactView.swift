@@ -82,8 +82,6 @@ class ContactView: UIViewController{
             var output: String = ""
             for sub in text.substring(with: range).components(separatedBy: "<br>"){
                 let subTrimmed = sub.trimmingCharacters(in: .whitespacesAndNewlines) + "\n"
-                print(sub)
-                print(subTrimmed)
                 output += subTrimmed
             }
             return output

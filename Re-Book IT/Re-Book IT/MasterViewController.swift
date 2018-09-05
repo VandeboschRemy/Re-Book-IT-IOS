@@ -8,6 +8,7 @@
 
 import UIKit
 import SQLite
+import Reachability
 
 class BookCell: UITableViewCell{
     @IBOutlet weak var price: UILabel!
@@ -36,15 +37,17 @@ class ExpandableView: UIView {
 class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPickerViewDelegate, UIPickerViewDataSource {
 
     var detailViewController: DetailViewController? = nil
-    var objects = [Row]()
+    private var objects = [Row]()
     lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width/2, height: 20))
-    var leftConstraint: NSLayoutConstraint!
-    var query: String = ""
-    var searchBy: Expression<String>? = nil
+    private var leftConstraint: NSLayoutConstraint!
+    private var query: String = ""
+    private var searchBy: Expression<String>? = nil
     @IBOutlet weak var spinner: UIPickerView!
     var detail: Row?
     let originalHeight: CGFloat = 140.0
-    var infoDidAppear = false
+    private var infoDidAppear = false
+    @IBOutlet weak var noNetwork: UILabel!
+    private var noNetworkDidAppear = false
     
     
     @IBOutlet weak var stackView: UIStackView!
@@ -88,6 +91,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         
         stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 0.0)
         
+        noNetwork.text = Constants.noNetwork
+        
         downloader(url: "https://rebookit.be/search")
     }
 
@@ -102,6 +107,10 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
             infoDidAppear = true
         }
         showData()
+        if(Reachability.forInternetConnection().currentReachabilityStatus() == NetworkStatus.NotReachable && !noNetworkDidAppear){
+            self.showNoNetwork()
+            noNetworkDidAppear = true
+        }
     }
 
 
@@ -161,7 +170,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
 
     // Download the booklist from the website in async.
     func downloader(url: String){
-        self.showToast(msg: " Updating content ")
+        self.showToast(msg: Constants.startUpdate)
         
         let group = DispatchGroup()
         group.enter()
@@ -188,12 +197,13 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
                 }
                 else{
                     print(error ?? "")
+                    self.showToast(msg: Constants.updateFailed)
                 }
             })
             task.resume()
         }
         group.notify(queue: queue, execute: {
-            self.showToast(msg: " Content updated ")
+            self.showToast(msg: Constants.updateSuccess)
             self.tableView.reloadData()
         })
     }
@@ -370,6 +380,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         self.view.layoutIfNeeded()
     }
     @IBAction func openSettings(_ sender: Any) {
+        showDropdown()
         let settingsurl = URL(string: UIApplication.openSettingsURLString)
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(settingsurl!, options: [:], completionHandler: nil)
@@ -378,6 +389,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         }
     }
     @IBAction func openSellBooks(_ sender: Any) {
+        showDropdown()
         let url = URL(string: "https://rebookit.be/sell")
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
@@ -388,9 +400,26 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     @IBAction func openContact(_ sender: Any) {
         showDropdown()
     }
+    @IBAction func infoClicked(_ sender: Any) {
+        showDropdown()
+    }
     
     func openInfo(){
         performSegue(withIdentifier: "showInformation", sender: self)
+    }
+    
+    func showNoNetwork(){
+        self.stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: originalHeight)
+        
+        noNetwork.isHidden = false
+        noNetwork.alpha = 0.6
+        UIView.animate(withDuration: 4, animations: {
+            self.noNetwork.alpha = 0.0
+        }, completion: {
+            (isCompleted) in
+            self.noNetwork.isHidden = true
+            self.stackView.frame = CGRect(x: self.stackView.frame.origin.x, y: self.stackView.frame.origin.y, width: self.stackView.frame.width, height: 0)
+        })
     }
 }
 

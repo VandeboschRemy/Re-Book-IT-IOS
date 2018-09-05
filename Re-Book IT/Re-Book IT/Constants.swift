@@ -41,6 +41,10 @@ Books at Re-Book IT have a qualitylabel which also determines the price.
 Every client gets one month to return a book. This is only valid if a mistake is made on the side on Re-Book IT.
     In specific this means a wrong qualitylabel or wrong product information.\n\n
 """
+    static let noNetwork = "Turn on internet to update content !!"
+    static let startUpdate = " Updating content "
+    static let updateSuccess = " Content updated "
+    static let updateFailed = " Failed updating content "
     
     // Do NOT translate following constants
     static let id = Expression<Int>("id")

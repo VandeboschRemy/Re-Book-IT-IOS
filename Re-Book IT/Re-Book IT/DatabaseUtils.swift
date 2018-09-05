@@ -14,10 +14,10 @@ let path = NSSearchPathForDirectoriesInDomains(
     .documentDirectory, .userDomainMask, true
     ).first!
 
-var db : Connection? = nil
+private var db : Connection? = nil
 
-var sortBy: Int? = 0
-var maxPrice: Double? = 150.0
+private var sortBy: Int? = 0
+private var maxPrice: Double? = 150.0
 
 func createTable(){
     do{
