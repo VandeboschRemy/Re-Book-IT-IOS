@@ -7,13 +7,12 @@
 //
 
 import UIKit
-import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    private var reachability:Reachability!
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -25,10 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         UINavigationBar.appearance().backgroundColor = UIColor.green
         UINavigationBar.appearance().barTintColor = UIColor.green
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.blue]
-        
-        NotificationCenter.default.addObserver(self, selector: Selector(("onConnectivityChange")), name: NSNotification.Name.reachabilityChanged, object: nil)
-        self.reachability = Reachability.forInternetConnection()
-        self.reachability.startNotifier()
         
         return true
     }
@@ -65,18 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return true
         }
         return false
-    }
-    
-    @objc func onConnectivityChange(notification: NSNotification){
-        let networkReachability = notification.object as! Reachability;
-        var remoteHostStatus = networkReachability.currentReachabilityStatus()
-        
-        if(remoteHostStatus == NetworkStatus.NotReachable){
-            MasterViewController().showNoNetwork()
-        }
-        else{
-            MasterViewController().downloader(url: "https://rebookit.be/search")
-        }
     }
 }
 

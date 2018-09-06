@@ -16,6 +16,7 @@ class BookCell: UITableViewCell{
     @IBOutlet weak var title: UILabel!
 }
 
+// Custom view for searchbar
 class ExpandableView: UIView {
     
     override init(frame: CGRect) {
@@ -45,9 +46,10 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     @IBOutlet weak var spinner: UIPickerView!
     var detail: Row?
     let originalHeight: CGFloat = 140.0
-    private var infoDidAppear = false
+    private var infoDidAppear = false //Flag to determine if the infoView has already appeared when there is no data in the database
     @IBOutlet weak var noNetwork: UILabel!
-    private var noNetworkDidAppear = false
+    private var noNetworkDidAppear = false //Flag to determine if the noNetwork has already showed
+    private var reachability:Reachability!
     
     
     @IBOutlet weak var stackView: UIStackView!
@@ -70,6 +72,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         searchBar.topAnchor.constraint(equalTo: expandableView.topAnchor).isActive = true
         searchBar.bottomAnchor.constraint(equalTo: expandableView.bottomAnchor).isActive = true
         
+        //Setup navigationbar
         searchBar.placeholder = "Search a book"
         let rightNavButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(toggle))
         self.navigationItem.rightBarButtonItem = rightNavButton
@@ -91,8 +94,15 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         
         stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: 0.0)
         
+        //Setup noNetwork view
         noNetwork.text = Constants.noNetwork
         
+        //Setup networkChangeListerner
+        NotificationCenter.default.addObserver(self, selector: #selector(onConnectivityChange), name: NSNotification.Name.reachabilityChanged, object: nil)
+        self.reachability = Reachability.forInternetConnection()
+        self.reachability.startNotifier()
+        
+        //Start the download of the data
         downloader(url: "https://rebookit.be/search")
     }
 
@@ -101,6 +111,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         super.viewWillAppear(animated)
     }
     
+    //Show the data if the view is ready or show the infoView when there is no data
+    //and check if there is an internetconnection
     override func viewDidAppear(_ animated: Bool) {
         if(!tableExists() && !infoDidAppear){
             self.openInfo()
@@ -136,7 +148,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return objects.count
     }
-
+    
+    //Setup every tableviewCell with the correct data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! BookCell
 
@@ -146,6 +159,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         
         cell.price!.text = "\(object[Constants.price])€"
         
+        //Set the right smiley depending on the quality
         let quality = Int(object[Constants.quality])
         if(quality! <= 30){
             cell.qualityTag!.image = UIImage(named: "yellow_smiley")
@@ -212,7 +226,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     //Show a toast
     func showToast(msg: String){
         let label = UILabel()
-        label.frame = CGRect(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.width/2, width: 0, height: 0)
+        label.frame = CGRect(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.width-5, width: 0, height: 0)
         label.text = "\(msg)"
         label.textAlignment = .center
         label.textColor = UIColor.white.withAlphaComponent(1.0)
@@ -222,6 +236,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
         label.numberOfLines = 0
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
+        label.frame.origin.x = (UIScreen.main.bounds.width/2) - (label.frame.width/2)
         
         self.view.addSubview(label)
         
@@ -355,6 +370,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
     }
     
     @objc func showDropdown(){
+        if(query == "" && !tableView.visibleCells.isEmpty){
+            self.tableView.scrollToRow(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .top, animated: true)
+        }
         self.stackView.frame = CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: stackView.frame.width, height: originalHeight)
         var i = 0
         if(spinner.isHidden && query != ""){
@@ -420,6 +438,19 @@ class MasterViewController: UITableViewController, UISearchBarDelegate,  UIPicke
             self.noNetwork.isHidden = true
             self.stackView.frame = CGRect(x: self.stackView.frame.origin.x, y: self.stackView.frame.origin.y, width: self.stackView.frame.width, height: 0)
         })
+    }
+    
+    @objc func onConnectivityChange(notification: NSNotification){
+        let networkReachability = notification.object as! Reachability;
+        var remoteHostStatus = networkReachability.currentReachabilityStatus()
+        
+        if(remoteHostStatus == NetworkStatus.NotReachable && !noNetworkDidAppear){
+            showNoNetwork()
+            noNetworkDidAppear = true
+        }
+        else if (remoteHostStatus != NetworkStatus.NotReachable){
+            downloader(url: "https://rebookit.be/search")
+        }
     }
 }
 

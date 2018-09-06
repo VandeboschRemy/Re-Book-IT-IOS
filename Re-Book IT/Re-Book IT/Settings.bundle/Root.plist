@@ -50,13 +50,13 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSTitleValueSpecifier</string>
 			<key>Title</key>
 			<string>Max price</string>
-			<key>DefaultValue</key>
-			<string>Max price</string>
 			<key>Key</key>
-			<string></string>
+			<string>title</string>
+			<key>DefaultValue</key>
+			<string>0-150</string>
 		</dict>
 		<dict>
 			<key>Type</key>
