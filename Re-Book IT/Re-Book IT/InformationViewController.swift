@@ -20,6 +20,7 @@ class InformationViewController: UIViewController{
     @IBOutlet weak var yellowInfo: UILabel!
     @IBOutlet weak var warrantyHeader: UILabel!
     @IBOutlet weak var warrantyInfo: UILabel!
+    @IBOutlet weak var authorInfo: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,5 +32,6 @@ class InformationViewController: UIViewController{
         yellowInfo.text = Constants.yellowInfo
         warrantyHeader.text = Constants.warrantyHeader
         warrantyInfo.text = Constants.warrantyInfo
+        authorInfo.text = Constants.authorInfo
     }
 }

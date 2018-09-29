@@ -778,10 +778,24 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfw-EM-TQd">
+                                        <rect key="frame" x="8" y="240" width="151" height="1"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="NmU-Lp-QLK"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="authorInfo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fq-Ue-VjM">
+                                        <rect key="frame" x="8" y="246" width="151" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="6SS-ZG-KD8" firstAttribute="top" secondItem="VvR-lE-6Dq" secondAttribute="bottom" constant="4" id="53C-fU-c4h"/>
+                                    <constraint firstItem="5fq-Ue-VjM" firstAttribute="top" secondItem="gfw-EM-TQd" secondAttribute="bottom" constant="5" id="BJS-vu-0Bc"/>
                                     <constraint firstItem="OgU-yb-hhl" firstAttribute="top" secondItem="VvR-lE-6Dq" secondAttribute="bottom" constant="4" id="BLj-5U-jzG"/>
                                     <constraint firstItem="TbR-do-PaH" firstAttribute="top" secondItem="C3N-iw-AWt" secondAttribute="bottom" constant="4" id="CTf-WR-3j0"/>
                                     <constraint firstItem="6SS-ZG-KD8" firstAttribute="leading" secondItem="OgU-yb-hhl" secondAttribute="trailing" constant="4" id="Cac-HT-ghZ"/>
@@ -789,6 +803,7 @@
                                     <constraint firstItem="C3N-iw-AWt" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="GOa-0f-FNi"/>
                                     <constraint firstItem="ytu-9j-9dl" firstAttribute="leading" secondItem="Pg1-Bo-Ehw" secondAttribute="trailing" constant="8" id="GrI-uL-aep"/>
                                     <constraint firstItem="OrY-Cn-np2" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="H0L-9P-jgu"/>
+                                    <constraint firstItem="gfw-EM-TQd" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="Hcg-QQ-jqt"/>
                                     <constraint firstAttribute="trailing" secondItem="kNF-Q2-N1X" secondAttribute="trailing" constant="8" id="Hdz-D2-j1J"/>
                                     <constraint firstItem="OgU-yb-hhl" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="HwJ-5G-5aW"/>
                                     <constraint firstItem="G1n-YL-gyU" firstAttribute="top" secondItem="ytu-9j-9dl" secondAttribute="bottom" constant="12" id="KUF-lQ-lAq"/>
@@ -798,13 +813,16 @@
                                     <constraint firstItem="VvR-lE-6Dq" firstAttribute="top" secondItem="PGt-GW-6rm" secondAttribute="bottom" constant="4" id="VXP-Pc-eDB"/>
                                     <constraint firstItem="kNF-Q2-N1X" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="Vdb-hW-1OP"/>
                                     <constraint firstAttribute="trailing" secondItem="TbR-do-PaH" secondAttribute="trailing" constant="8" id="WAx-SI-UzB"/>
+                                    <constraint firstAttribute="bottom" secondItem="5fq-Ue-VjM" secondAttribute="bottom" constant="321" id="Wn4-ub-UTQ"/>
+                                    <constraint firstItem="5fq-Ue-VjM" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="b4w-GY-NE0"/>
                                     <constraint firstItem="Pg1-Bo-Ehw" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="baH-en-JWc"/>
                                     <constraint firstItem="8RX-4L-eca" firstAttribute="leading" secondItem="e35-5K-qUV" secondAttribute="trailing" constant="8" id="bca-h1-tb9"/>
                                     <constraint firstItem="e35-5K-qUV" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="cNL-ef-BYK"/>
-                                    <constraint firstAttribute="bottom" secondItem="TbR-do-PaH" secondAttribute="bottom" constant="368" id="cym-fu-Bdc"/>
                                     <constraint firstItem="ccN-Ng-tEm" firstAttribute="top" secondItem="vup-Tc-yj0" secondAttribute="top" constant="4" id="dO8-Lf-w3R"/>
                                     <constraint firstAttribute="trailing" secondItem="G1n-YL-gyU" secondAttribute="trailing" constant="20" symbolic="YES" id="dZk-DL-ghO"/>
+                                    <constraint firstAttribute="trailing" secondItem="gfw-EM-TQd" secondAttribute="trailing" constant="8" id="dzN-2M-MkR"/>
                                     <constraint firstItem="VvR-lE-6Dq" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="eBB-65-tLm"/>
+                                    <constraint firstItem="gfw-EM-TQd" firstAttribute="top" secondItem="TbR-do-PaH" secondAttribute="bottom" constant="5" id="egG-hR-j45"/>
                                     <constraint firstItem="G1n-YL-gyU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vup-Tc-yj0" secondAttribute="top" constant="154" id="erx-bZ-vQY"/>
                                     <constraint firstItem="yfC-Oh-slI" firstAttribute="leading" secondItem="vup-Tc-yj0" secondAttribute="leading" constant="8" id="evY-GR-E45"/>
                                     <constraint firstItem="C3N-iw-AWt" firstAttribute="top" secondItem="kNF-Q2-N1X" secondAttribute="bottom" constant="4" id="fFW-nJ-mPH"/>
@@ -821,6 +839,7 @@
                                     <constraint firstItem="Pg1-Bo-Ehw" firstAttribute="top" secondItem="e35-5K-qUV" secondAttribute="bottom" constant="4" id="oCb-gt-nWg"/>
                                     <constraint firstAttribute="trailing" secondItem="ccN-Ng-tEm" secondAttribute="trailing" constant="8" id="ogg-g8-QQO"/>
                                     <constraint firstItem="ytu-9j-9dl" firstAttribute="top" secondItem="8RX-4L-eca" secondAttribute="bottom" constant="8" id="oou-wl-Fab"/>
+                                    <constraint firstAttribute="trailing" secondItem="5fq-Ue-VjM" secondAttribute="trailing" constant="8" id="ow1-2m-WPa"/>
                                     <constraint firstAttribute="trailing" secondItem="PGt-GW-6rm" secondAttribute="trailing" constant="8" id="pts-go-jEN"/>
                                     <constraint firstAttribute="trailing" secondItem="E7A-2I-rTz" secondAttribute="trailing" constant="8" id="q1w-XL-xck"/>
                                     <constraint firstItem="yfC-Oh-slI" firstAttribute="top" secondItem="ccN-Ng-tEm" secondAttribute="bottom" constant="4" id="rV4-fS-hU6"/>
@@ -843,6 +862,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cwW-dj-OT4"/>
                     <connections>
+                        <outlet property="authorInfo" destination="5fq-Ue-VjM" id="i8g-2H-f2c"/>
                         <outlet property="greenInfo" destination="6SS-ZG-KD8" id="7Tn-Ld-YPa"/>
                         <outlet property="greyInfo" destination="ytu-9j-9dl" id="bzN-os-cqF"/>
                         <outlet property="infoPriceAndQuality" destination="PGt-GW-6rm" id="5dO-He-l8c"/>

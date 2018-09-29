@@ -39,12 +39,13 @@ Books at Re-Book IT have a qualitylabel which also determines the price.
     static let warrantyHeader = "What warranty is provided at Re-Book IT?"
     static let warrantyInfo = """
 Every client gets one month to return a book. This is only valid if a mistake is made on the side on Re-Book IT.
-    In specific this means a wrong qualitylabel or wrong product information.\n\n
+    Specifically this means a wrong qualitylabel or wrong product information.\n\n
 """
     static let noNetwork = "Turn on internet to update content !!"
     static let startUpdate = " Updating content "
     static let updateSuccess = " Content updated "
     static let updateFailed = " Failed updating content "
+    static let authorInfo = "Created by Vandebosch Remy"
     
     // Do NOT translate following constants
     static let id = Expression<Int>("id")
