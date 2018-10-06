@@ -120,6 +120,7 @@ class DetailViewController: UIViewController {
         \(author.text!)\n
         \(isbn.text!)\n
         \(quality.text!)\n
+        \(price.text!)\n
         \(Constants.shareEnd)
         """
         let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
